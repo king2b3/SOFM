@@ -39,18 +39,20 @@ random.shuffle(train)
 test.sort(key=sortSecond)
 ###############################
 
-####### Network Decleration #######
-max_epochs = 500
-no = 0.1
-tau = max_epochs/2
-tauN = max_epochs/2
-sigmaP = 50
-trainBool = True
+for max_epochs in [1000,5000,10000]:
 
-layers = [784,100]
-NN = Network(layers)
+    ####### Network Decleration #######
+    no = 0.1
+    tau = max_epochs/2
+    tauN = max_epochs/2
+    sigmaP = 50
+    trainBool = True
 
-#trainBool = NN.train(data,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
+    layers = [784,100]
+    NN = Network(layers)
 
-NN.test(test,trainBool)
-###################################
+    trainBool = NN.train(train,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
+
+    NN.test(test,trainBool)
+    print('results for ',max_epochs,' max epochs')
+    ###################################
