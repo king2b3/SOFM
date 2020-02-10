@@ -1,7 +1,6 @@
 #   Bayley King
-#   Intelligent Systems Homework 5
-#   Python 3.6.8
-#   Due 12/05/19
+#   SOFM Base Network 
+#   Python 3.7.3
 
 ####### Libraries #######
 import csv
@@ -57,8 +56,7 @@ class Network(object):
                 self.fullMap[i][1] = D[i]
 
 
-
-    def sigma(self,e):
+    def sigma(self,e,tauN,sigmaP):
         '''
         This function will decay the sigma rate of the 
         neighboorhood function across each epoch
@@ -66,15 +64,14 @@ class Network(object):
         return (sigmaP*np.exp(0-(e/tauN)))
     
 
-    def decay_LR(self,t):
+    def decay_LR(self,t,tau,no):
         '''
         This function will decay the learning rate over the training set
         t is the current epoch of the system.
         '''
         return (no*np.exp(-t/tau))
 
-
-    def train(self,training):
+    def train(self,training,max_epochs,no,tau,tauN,sigmaP,trainBool):
         '''
         this function trains the network for a max number of epochs
         '''
@@ -83,11 +80,11 @@ class Network(object):
         print('Starting Training')
         print('##############')
         for e in range(max_epochs):
-            eta = self.decay_LR(e)
-            sigma = self.sigma(e)
+            eta = self.decay_LR(e,tau,no)
+            sigma = self.sigma(e,tauN,sigmaP)
             for i in training:
                 N = self.winning_neuron(i)
-                self.update_weights(eta,sigm = [29,100]a,i)
+                self.update_weights(eta,sigma,i)
             # epoch complete
             if e % 100 == 0:
                 print('epoch',e,'complete')
@@ -129,47 +126,6 @@ class Network(object):
         for i in self.fullMap:
             output.append(i[0][0])
         h = []
-        for i in range(0, len(outpu = [29,100]
-        #for h in range(0,100,10):
-        #    print(output[h][0],'\t',output[h+1][0],'\t',output[h+2][0],'\t',output[h+3][0],'\t',output[h+4][0],'\t',output[h+5][0],'\t',output[h+6][0],'\t',output[h+7][0],'\t',output[h+8][0],'\t',output[h+9][0])
-
-max_epochs = 4000
-no = 0.1
-tau = 2000
-tauN = 750
-sigmaP = 50
-trainBool = True
-
-
-layers = [29,100]
-NN = Network(layers)
-
-train = []
-with open('trainingSet.txt') as csv_file:
-    lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter=',')
-    for row in lines:
-        train.append(list(row))
-print(train)
-train = np.array(train)
-
-testNum = []
-#with open('testing1Set.txt') as csv_file:      # swap next line for problem 2
-with open('testing1Set.txt') as csv_file:
-    lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter=',')
-    for row in lines:
-        testNum.append(row)
-
-testLabel = []
-#with open('testing2SetLabels.txt') as csv_file:  # swap next line for problem 2
-with open('testing1SetLabels.txt') as csv_file:
-    lines = csv.reader(csv_file, delimiter=',')
-    for row in lines:
-        testLabel.append(row)
-
-test = list(zip(testNum,testLabel))
-test = np.array(test)
-
-trainBool = NN.train(train)
-
-NN.test(test,trainBool)
-
+        for x in range(0, len(output), 10):  
+            h.append(output[x:x + 10])
+        print(tabulate(h))
