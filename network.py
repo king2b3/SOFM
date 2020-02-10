@@ -17,8 +17,7 @@ class Network(object):
         '''
         self.num_Layers = len(layers)
         self.layers = layers
-        self.weights = np.array([np.random.randn(x,y)  for x,y in zip(layers[1:],layers[:-1])])
-        self.weights = self.weights[0]
+        self.weights = np.random.randn(self.layers[1],self.layers[0])
         self.fullMap = []  
         [self.fullMap.append(['r',9999999]) for i in range(100)]
         self.SOM_Shape = np.array([10, 10])
@@ -30,7 +29,7 @@ class Network(object):
         '''
         This function returns the index of the winning neuron
         '''
-        return np.argmin(np.linalg.norm(x - self.weights, axis=1))
+        return np.argmin(np.linalg.norm(x[0] - self.weights, axis=1))
 
 
     def update_weights(self, eta, sigma, x):
@@ -38,10 +37,10 @@ class Network(object):
         This changes the weights based off of the neighboorhood
         function after finding the best performing neuron
         '''
-        i = self.winning_neuron(x)
+        i = self.winning_neuron(x[0])
         d = np.square(np.linalg.norm(self.Index - self.Index[i], axis=1))
         h = np.exp(-d/(2 * sigma**2))
-        self.weights += eta * h[:, np.newaxis] * (x - self.weights)
+        self.weights += eta * h[:, np.newaxis] * (x[0] - self.weights)
 
 
     def test_winning_neuron(self,X):
@@ -86,7 +85,7 @@ class Network(object):
                 N = self.winning_neuron(i)
                 self.update_weights(eta,sigma,i)
             # epoch complete
-            if e % 100 == 0:
+            if e % 10 == 0:
                 print('epoch',e,'complete')
         with open('Weights.txt', 'w') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
@@ -112,16 +111,18 @@ class Network(object):
                     self.weights[neuron][w] = lines[counter]
                     counter += 1
         
-
         print('##############')
         print('Starting Testing')
         print('##############')
+        # Finds the winning neuron for each input, stores that in Win
         Win = []
         for t in testing:
             Win.append(self.winning_neuron(t[0]))
             self.test_winning_neuron(t)
-        #for k in range(len(Win)):
-        #    print(Win[k],testing[k][1][0])
+        # Prints the best neuron for each input
+        for k in range(len(Win)):
+            print(Win[k],testing[k][1][0])
+        # Prints the best input for each neuron on map
         output = []
         for i in self.fullMap:
             output.append(i[0][0])

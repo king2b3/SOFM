@@ -1,46 +1,56 @@
-from network import Network 
-import csv
-import numpy as np
+#   Bayley King
+#   SOFM MNIST Application 
+#   Python 3.7.3
+#   Feb 7 2020
 
-max_epochs = 4000
+####### Libraries #######
+import csv
+import random
+import numpy as np
+from tabulate import tabulate
+#########################
+
+####### Classes #######
+from network import Network 
+#######################
+
+####### Functions #######
+def sortSecond(val): 
+    return val[1] 
+#########################
+
+####### Load MNIST Data #######
+images = []
+with open('DataSets/MNISTnumImages5000.txt') as csv_file:
+    lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter='\t')
+    for row in lines:
+        images.append(list(row))
+
+labels = []
+with open('DataSets/MNISTnumLabels5000.txt') as csv_file:
+    lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter='\n')
+    for row in lines:
+        labels.append([int(row[0])])
+
+data = list(zip(images,labels))
+train = data[:4000]
+test = data[4000:]
+random.shuffle(train)
+test.sort(key=sortSecond)
+###############################
+
+####### Network Decleration #######
+max_epochs = 500
 no = 0.1
-tau = 2000
-tauN = 750
+tau = max_epochs/2
+tauN = max_epochs/2
 sigmaP = 50
 trainBool = True
 
-
-layers = [29,100]
+layers = [784,100]
 NN = Network(layers)
 
-
-
-train = []
-with open('DataSets/trainingSet.txt') as csv_file:
-    lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter=',')
-    for row in lines:
-        train.append(list(row))
-#print(train)
-train = np.array(train)
-
-testNum = []
-#with open('testing1Set.txt') as csv_file:      # swap next line for problem 2
-with open('DataSets/testing1Set.txt') as csv_file:
-    lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter=',')
-    for row in lines:
-        testNum.append(row)
-
-testLabel = []
-#with open('testing2SetLabels.txt') as csv_file:  # swap next line for problem 2
-with open('DataSets/testing1SetLabels.txt') as csv_file:
-    lines = csv.reader(csv_file, delimiter=',')
-    for row in lines:
-        testLabel.append(row)
-
-test = list(zip(testNum,testLabel))
-test = np.array(test)
-
-trainBool = NN.train(train,max_epochs,no,tau,tauN,sigmaP,trainBool)
+#trainBool = NN.train(data,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
 
 NN.test(test,trainBool)
-
+###################################
