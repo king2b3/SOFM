@@ -70,7 +70,7 @@ class Network(object):
         '''
         return (no*np.exp(-t/tau))
 
-    def train(self,training,max_epochs,no,tau,tauN,sigmaP,trainBool):
+    def train(self,training,max_epochs,no,tau,tauN,sigmaP,trainBool,batch_size):
         '''
         this function trains the network for a max number of epochs
         '''
@@ -79,9 +79,11 @@ class Network(object):
         print('Starting Training')
         print('##############')
         for e in range(max_epochs):
+            random.shuffle(training)
             eta = self.decay_LR(e,tau,no)
             sigma = self.sigma(e,tauN,sigmaP)
-            for i in training:
+            batch = training[:batch_size]
+            for i in batch:
                 N = self.winning_neuron(i)
                 self.update_weights(eta,sigma,i)
             # epoch complete
