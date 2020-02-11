@@ -39,12 +39,12 @@ random.shuffle(train)
 test.sort(key=sortSecond)
 ###############################
 
-max_epochs = 4000
+max_epochs = 2000
 
 ####### Network Decleration #######
 no = 0.1
 tau = max_epochs/2
-tauN = max_epochs/5
+tauN = max_epochs/10
 sigmaP = 50
 batch_size = 10
 trainBool = True

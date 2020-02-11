@@ -122,8 +122,8 @@ class Network(object):
             Win.append(self.winning_neuron(t[0]))
             self.test_winning_neuron(t)
         # Prints the best neuron for each input
-        #for k in range(len(Win)):
-        #    print(Win[k],testing[k][1][0])
+        for k in range(len(Win)):
+            print(Win[k],testing[k][1][0])
         # Prints the best input for each neuron on map
         output = []
         for i in self.fullMap:
