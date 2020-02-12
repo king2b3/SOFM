@@ -19,8 +19,9 @@ class Network(object):
         self.layers = layers
         self.weights = np.random.randn(self.layers[1],self.layers[0])
         self.fullMap = []  
-        [self.fullMap.append(['r',9999999]) for i in range(100)]
-        self.SOM_Shape = np.array([10, 10])
+        [self.fullMap.append(['r',9999999]) for i in range(layers[1])]
+        sq = int(np.sqrt(layers[1]))
+        self.SOM_Shape = np.array([sq, sq])
         self.Index = np.mgrid[0:self.SOM_Shape[0],0:self.SOM_Shape[1]].reshape(2, self.SOM_Shape[0]*self.SOM_Shape[1]).T
 
 
@@ -70,7 +71,7 @@ class Network(object):
         '''
         return (no*np.exp(-t/tau))
 
-    def train(self,training,max_epochs,no,tau,tauN,sigmaP,trainBool,batch_size):
+    def train(self,training,max_epochs,no,tau,tauN,sigmaP,trainBool,batch_size = 4000):
         '''
         this function trains the network for a max number of epochs
         '''
@@ -87,8 +88,8 @@ class Network(object):
                 N = self.winning_neuron(i)
                 self.update_weights(eta,sigma,i)
             # epoch complete
-            if e % 10 == 0:
-                print('epoch',e,'complete')
+            #if e % 10 == 0:
+            print('epoch',e,'complete')
         with open('Weights.txt', 'w') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             for neuron in range(len(self.weights)):
