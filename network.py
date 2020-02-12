@@ -70,7 +70,10 @@ class Network(object):
         This function will decay the learning rate over the training set
         t is the current epoch of the system.
         '''
-        return (no*np.exp(-t/tau))
+        a = no*np.exp(-t/tau)
+        if a < .1:
+            a = .1
+        return a
 
     def train(self,training,max_epochs,no,tau,tauN,sigmaP,trainBool,batch_size = None):
         '''
