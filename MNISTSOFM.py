@@ -49,10 +49,10 @@ sigmaP = 50
 #batch_size = 50
 trainBool = True
 
-layers = [784,100]
+layers = [784,400]
 NN = Network(layers)
 
-trainBool = NN.train(train,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
+#trainBool = NN.train(train,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
 
 NN.test(test,trainBool)
 print('results for ',max_epochs,' max epochs')

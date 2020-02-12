@@ -7,6 +7,7 @@ import csv
 import random
 import numpy as np
 from tabulate import tabulate
+import pickle as pkl
 #########################
 
 class Network(object):
@@ -20,8 +21,8 @@ class Network(object):
         self.weights = np.random.randn(self.layers[1],self.layers[0])
         self.fullMap = []  
         [self.fullMap.append(['r',9999999]) for i in range(layers[1])]
-        sq = int(np.sqrt(layers[1]))
-        self.SOM_Shape = np.array([sq, sq])
+        self.sq = int(np.sqrt(layers[1]))
+        self.SOM_Shape = np.array([self.sq, self.sq])
         self.Index = np.mgrid[0:self.SOM_Shape[0],0:self.SOM_Shape[1]].reshape(2, self.SOM_Shape[0]*self.SOM_Shape[1]).T
 
 
@@ -71,11 +72,13 @@ class Network(object):
         '''
         return (no*np.exp(-t/tau))
 
-    def train(self,training,max_epochs,no,tau,tauN,sigmaP,trainBool,batch_size = 4000):
+    def train(self,training,max_epochs,no,tau,tauN,sigmaP,trainBool,batch_size = None):
         '''
         this function trains the network for a max number of epochs
         '''
         trainBool = False
+        if batch_size is None:
+            batch_size = len(training)
         print('##############')
         print('Starting Training')
         print('##############')
@@ -130,6 +133,7 @@ class Network(object):
         for i in self.fullMap:
             output.append(i[0][0])
         h = []
-        for x in range(0, len(output), 10):  
-            h.append(output[x:x + 10])
+        for x in range(0, len(output), self.sq):  
+            h.append(output[x:x + self.sq])
         print(tabulate(h))
+        pkl.dump(output, open("map.p", "wb" ) )
