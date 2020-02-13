@@ -95,7 +95,7 @@ class Network(object):
                 self.update_weights(eta,sigma,i)
             # epoch complete
             #if e % 10 == 0:
-            print('epoch',e,'complete')
+#            print('epoch',e,'complete')
         with open('Weights.txt', 'w') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             for neuron in range(len(self.weights)):

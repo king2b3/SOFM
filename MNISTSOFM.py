@@ -39,7 +39,7 @@ random.shuffle(train)
 test.sort(key=sortSecond)
 ###############################
 
-max_epochs = 30
+max_epochs = 400
 
 ####### Network Decleration #######
 no = 0.9
