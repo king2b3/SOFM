@@ -44,5 +44,27 @@ def weightPlot(weights):
     plt.savefig("SavedWeights/Weights.tiff")
     #plt.show()
 
-w = loadWeights()
-weightPlot(w)
+def loadMnist():
+    import csv
+    import random
+    images = []
+    with open('DataSets/MNISTnumImages5000.txt') as csv_file:
+        lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter='\t')
+        for row in lines:
+            images.append(list(row))
+
+    labels = []
+    with open('DataSets/MNISTnumLabels5000.txt') as csv_file:
+        lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter='\n')
+        for row in lines:
+            labels.append([int(row[0])])
+
+    data = list(zip(images,labels))
+    train = data[:4000]
+    test = data[4000:]
+    random.shuffle(train)
+    test.sort(key=sortSecond)
+    return train,test
+
+def sortSecond(val): 
+    return val[1] 

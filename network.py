@@ -6,7 +6,7 @@
 import csv
 import random
 import numpy as np
-from tabulate import tabulate
+#from tabulate import tabulate
 import pickle as pkl
 #########################
 
@@ -111,7 +111,7 @@ class Network(object):
         '''
         if trainBool:
             print('Loading Weights......')
-            dataFile = open('Weights.txt')
+            dataFile = open('SavedWeights/Weights.txt')
             lines = dataFile.readlines()
             dataFile.close()
             counter = 0
@@ -129,8 +129,8 @@ class Network(object):
             Win.append(self.winning_neuron(t[0]))
             self.test_winning_neuron(t)
         # Prints the best neuron for each input
-        for k in range(len(Win)):
-            print(Win[k],testing[k][1][0])
+        #for k in range(len(Win)):
+        #    print(Win[k],testing[k][1][0])
         # Prints the best input for each neuron on map
         output = []
         for i in self.fullMap:
@@ -138,5 +138,5 @@ class Network(object):
         h = []
         for x in range(0, len(output), self.sq):  
             h.append(output[x:x + self.sq])
-        print(tabulate(h))
+        #print(tabulate(h))
         pkl.dump(output, open("SavedWeights/map.p", "wb" ) )
