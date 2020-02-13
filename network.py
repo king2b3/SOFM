@@ -96,7 +96,7 @@ class Network(object):
             # epoch complete
             #if e % 10 == 0:
 #            print('epoch',e,'complete')
-        with open('Weights.txt', 'w') as csv_file:
+        with open('SavedWeights/Weights.txt', 'w') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             for neuron in range(len(self.weights)):
                 for w in range(len(self.weights[0])):
@@ -139,4 +139,4 @@ class Network(object):
         for x in range(0, len(output), self.sq):  
             h.append(output[x:x + self.sq])
         print(tabulate(h))
-        pkl.dump(output, open("map.p", "wb" ) )
+        pkl.dump(output, open("SavedWeights/map.p", "wb" ) )
