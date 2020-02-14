@@ -24,23 +24,26 @@ class Network(object):
         self.sq = int(np.sqrt(layers[1]))
         self.SOM_Shape = np.array([self.sq, self.sq])
         self.Index = np.mgrid[0:self.SOM_Shape[0],0:self.SOM_Shape[1]].reshape(2, self.SOM_Shape[0]*self.SOM_Shape[1]).T
-
+        self.metricsDistance = []
 
 
     def winning_neuron(self,x):
         '''
         This function returns the index of the winning neuron
         '''
-        return np.argmin(np.linalg.norm(x[0] - self.weights, axis=1))
+        c = np.linalg.norm(x[0] - self.weights, axis=1)
+        a = np.argmin(c)
+        c[a] = 9999999
+        b = np.argmin(c)
+        return a,b
 
 
-    def update_weights(self, eta, sigma, x):
+    def update_weights(self, eta, sigma, N, x):
         '''
         This changes the weights based off of the neighboorhood
         function after finding the best performing neuron
         '''
-        i = self.winning_neuron(x[0])
-        d = np.square(np.linalg.norm(self.Index - self.Index[i], axis=1))
+        d = np.square(np.linalg.norm(self.Index - self.Index[N], axis=1))
         h = np.exp(-d/(2 * sigma**2))
         self.weights += eta * h[:, np.newaxis] * (x[0] - self.weights)
 
@@ -55,6 +58,12 @@ class Network(object):
             if D[i] < self.fullMap[i][1]:
                 self.fullMap[i][0] = X[1]
                 self.fullMap[i][1] = D[i]
+
+    def metrics(self,a,b):
+        x1,y1 = np.divmod(a,self.sq)
+        x2,y2 = np.divmod(b,self.sq)
+        dist = np.sqrt(((x1-x2)**2 + (y1-y2)**2))
+        return dist
 
 
     def sigma(self,e,tauN,sigmaP):
@@ -90,18 +99,35 @@ class Network(object):
             eta = self.decay_LR(e,tau,no)
             sigma = self.sigma(e,tauN,sigmaP)
             batch = training[:batch_size]
+            distance = []
             for i in batch:
-                N = self.winning_neuron(i)
-                self.update_weights(eta,sigma,i)
+                N,N2 = self.winning_neuron(i)
+                self.update_weights(eta,sigma,N,i)
+                distance.append(self.metrics(N,N2))
             # epoch complete
+            self.metricsDistance.append(np.average(distance))
             #if e % 10 == 0:
-#            print('epoch',e,'complete')
+            #print('epoch',e,'complete')
+        return trainBool
+
+    def saveWeights(self):
         with open('SavedWeights/Weights.txt', 'w') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             for neuron in range(len(self.weights)):
                 for w in range(len(self.weights[0])):
                     csv_writer.writerow([self.weights[neuron][w]])
-        return trainBool
+
+
+    def saveMetrics(self,max_epochs,no,tau,tauN,sigmaP,layer):
+        pkl.dump(self.metricsDistance, open("SavedWeights/metrics.p", "wb" ) )
+        with open('SavedWeights/BestParam.txt', 'w') as csv_file:
+            csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+            csv_writer.writerow(['Max epochs: '+str(max_epochs)])
+            csv_writer.writerow(['Learning Rate: '+str(no)])
+            csv_writer.writerow(['Tau: '+str(tau)])
+            csv_writer.writerow(['TauN: '+str(tauN)])
+            csv_writer.writerow(['SigmaP: '+str(sigmaP)])
+            csv_writer.writerow(['Final layers 784',layer])
 
 
     def test(self,testing,trainBool):
@@ -126,7 +152,7 @@ class Network(object):
         # Finds the winning neuron for each input, stores that in Win
         Win = []
         for t in testing:
-            Win.append(self.winning_neuron(t[0]))
+            Win.append(self.winning_neuron(t[0])[0])
             self.test_winning_neuron(t)
         # Prints the best neuron for each input
         #for k in range(len(Win)):

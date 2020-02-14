@@ -1,6 +1,7 @@
 def graphHeatmap():
     import matplotlib.pyplot as plt
     import pickle as pkl
+    plt.figure()
     h = []
     output = pkl.load( open( "SavedWeights/map.p", "rb" ) )
     for x in range(0, len(output), 10):  
@@ -29,6 +30,7 @@ def lookAtTheseBoys(num,weights):
 
 def weightPlot(weights):
     import matplotlib.pyplot as plt
+    plt.figure()
     numfella = 0
     f, axarr = plt.subplots(10,10) #,constrained_layout=True)#,gridspec_kw = {'wspace':0, 'hspace':0})
     for row in range(10):
@@ -68,3 +70,17 @@ def loadMnist():
 
 def sortSecond(val): 
     return val[1] 
+
+def plotMetrics(max_epochs):
+    import matplotlib.pyplot as plt
+    import pickle as pkl
+    plt.figure()
+    epochs = range(max_epochs)
+    metrics = pkl.load( open( "SavedWeights/metrics.p", "rb" ) )
+    plt.plot(epochs, metrics, 'ro')
+    plt.xlabel('Epohcs')
+    plt.ylabel('Average distance')
+    plt.title('Average distance between 1st and 2nd winning neuron over each epoch')
+    plt.ylim([0,4])
+    #plt.show()
+    plt.savefig("SavedWeights/MetricsvsEpochs.jpeg")
