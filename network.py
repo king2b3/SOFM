@@ -118,7 +118,7 @@ class Network(object):
                     csv_writer.writerow([self.weights[neuron][w]])
 
 
-    def saveMetrics():
+    def saveMetrics(self,max_epochs,no,tau,tauN,sigmaP,layer):
         pkl.dump(self.metricsDistance, open("SavedWeights/metrics.p", "wb" ) )
         with open('SavedWeights/BestParam.txt', 'w') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
