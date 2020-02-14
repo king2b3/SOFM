@@ -28,14 +28,14 @@ for max_epochs in [100,450,2000]:
     for no in [.1,1,4]:
         for tau in [max_epochs,max_epochs/2,max_epochs/10]:
             for tauN in [max_epochs,max_epochs/2,max_epochs/10]:
-	        for sigmaP in [10,50,100]:
-	             trainBool = True
-	             NN = Network(layers)
-	             trainBool = NN.train(train,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
-	             if NN.metricsDistance[-1] < best_met:
-	                 best_met = NN.metricsDistance[-1]
-	                 NN.saveWeights()
-	                 NN.saveMetrics(max_epochs,no,tau,tauN,sigmaP,layer)
-	                 NN.test(test,trainBool)
+	        	for sigmaP in [10,50,100]:
+	            	trainBool = True
+	            	NN = Network(layers)
+	            	trainBool = NN.train(train,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
+	            	if NN.metricsDistance[-1] < best_met:
+	                	best_met = NN.metricsDistance[-1]
+	                	NN.saveWeights()
+	                	NN.saveMetrics(max_epochs,no,tau,tauN,sigmaP,layer)
+	                	NN.test(test,trainBool)
 
 ###################################
