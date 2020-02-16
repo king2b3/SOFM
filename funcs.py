@@ -48,7 +48,7 @@ def weightPlot(weights,Output):
             numfella += 1
     plt.subplots_adjust(wspace=0, hspace=0)
     path = 'SavedWeights/'+Output
-    plt.savefig(Output)
+    plt.savefig(path)
     #plt.show()
 
 def loadMnist():
