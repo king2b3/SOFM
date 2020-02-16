@@ -18,24 +18,18 @@ sigmaP = 100
 #batch_size = 50
 trainBool = True
 layers = [784,100]
-SimParm = "BestParam.txt"
-Metrics = "metrics.p"
-MapPickle = "map.p"
-Weights = "Weights.txt"
-OutputMap = "Map.tiff"
-OutputW =  "Weights.tiff"
-OutputMet = "Metrics.tiff"
 
 NN = Network(layers)
 
 trainBool = NN.train(training,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
-NN.test(test,MapPickle,trainBool)
-NN.saveMetrics(max_epochs,no,tau,tauN,sigmaP,layers[-1],Metrics,SimParm)
-NN.saveWeights(Weights)
+NN.test(test,trainBool)
+NN.saveMetrics(max_epochs,no,tau,tauN,sigmaP,layers[-1])
+NN.saveWeights()
 
 # Testing, kinda
 
-weight = funcs.loadWeights(Weights)
-funcs.plotMetrics(max_epochs,Metrics,OutputMet)
-funcs.graphHeatmap(MapPickle,OutputMap)
-funcs.weightPlot(weight,OutputW)
+weight = funcs.loadWeights()
+
+funcs.plotMetrics(max_epochs)
+funcs.graphHeatmap()
+funcs.weightPlot(weight)
