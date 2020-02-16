@@ -107,20 +107,23 @@ class Network(object):
             # epoch complete
             self.metricsDistance.append(np.average(distance))
             #if e % 10 == 0:
-            #print('epoch',e,'complete')
+            print('epoch',e,'complete')
         return trainBool
 
-    def saveWeights(self):
-        with open('SavedWeights/Weights.txt', 'w') as csv_file:
+    def saveWeights(self,filename):
+        path = 'SavedWeights/'+filename
+        with open(path, 'w') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             for neuron in range(len(self.weights)):
                 for w in range(len(self.weights[0])):
                     csv_writer.writerow([self.weights[neuron][w]])
 
 
-    def saveMetrics(self,max_epochs,no,tau,tauN,sigmaP,layer):
-        pkl.dump(self.metricsDistance, open("SavedWeights/metrics.p", "wb" ) )
-        with open('SavedWeights/BestParam.txt', 'w') as csv_file:
+    def saveMetrics(self,max_epochs,no,tau,tauN,sigmaP,layer,Metrics,Parm):
+        Mpath = 'SavedWeights/'+Metrics
+        Ppath = 'SavedWeights/'+Parm
+        pkl.dump(self.metricsDistance, open(Mpath, "wb" ) )
+        with open(Ppath, 'w') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             csv_writer.writerow(['Max epochs: '+str(max_epochs)])
             csv_writer.writerow(['Learning Rate: '+str(no)])
@@ -130,14 +133,15 @@ class Network(object):
             csv_writer.writerow(['Final layers 784',layer])
 
 
-    def test(self,testing,trainBool):
+    def test(self,testing,Output,trainBool,Weights='Weights.txt'):
         '''
         This function will test the trained network with the new
         data points
         '''
         if trainBool:
             print('Loading Weights......')
-            dataFile = open('SavedWeights/Weights.txt')
+            path1 = 'SavedWeights/'+Weights
+            dataFile = open(path1)
             lines = dataFile.readlines()
             dataFile.close()
             counter = 0
@@ -165,4 +169,5 @@ class Network(object):
         for x in range(0, len(output), self.sq):  
             h.append(output[x:x + self.sq])
         #print(tabulate(h))
-        pkl.dump(output, open("SavedWeights/map.p", "wb" ) )
+        path2 = 'SavedWeights/'+Output
+        pkl.dump(output, open(path2, "wb" ) )
