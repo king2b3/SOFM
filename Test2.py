@@ -7,7 +7,7 @@
 Long version testing of the SOM with MNIST, ran on dracarys
 '''
 ####### Decerations #######
-from network import Network 
+from Network2 import Network 
 import funcs
 ###########################
 
@@ -35,7 +35,7 @@ for max_epochs in [100,450,2000]:
 					if NN.metricsDistance[-1] < best_met:
 						best_met = NN.metricsDistance[-1]
 						NN.saveWeights()
-						NN.saveMetrics(max_epochs,no,tau,tauN,sigmaP,layer)
+						NN.saveMetrics(max_epochs,no,tau,tauN,sigmaP,layers[-1])
 						NN.test(test,trainBool)
 
 ###################################

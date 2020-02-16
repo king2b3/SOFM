@@ -1,15 +1,15 @@
 def graphHeatmap():
     import matplotlib.pyplot as plt
     import pickle as pkl
-    plt.figure()
+#    plt.figure()
     h = []
-    output = pkl.load( open( "SavedWeights/map.p", "rb" ) )
+    output = pkl.load( open( "SavedWeights/2map.p", "rb" ) )
     for x in range(0, len(output), 10):  
         h.append(output[x:x + 10])
     import seaborn as sns; sns.set()
     ax = sns.heatmap(h, annot=True,xticklabels=False,yticklabels=False,cbar=False)
     #plt.show()
-    plt.savefig("SavedWeights/Map.jpeg")
+    plt.savefig("SavedWeights/2Map.jpeg")
 
 
 def loadWeights():
@@ -17,7 +17,7 @@ def loadWeights():
     import csv
     layers = [784,100]
     weights = np.random.randn(layers[1],layers[0])
-    with open('SavedWeights/Weights.txt', 'w') as csv_file:
+    with open('SavedWeights/2Weights.txt', 'w') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
         for neuron in range(len(weights)):
             for w in range(len(weights[0])):
@@ -43,7 +43,7 @@ def weightPlot(weights):
             axarr[row,col].axis('off')
             numfella += 1
     plt.subplots_adjust(wspace=0, hspace=0)
-    plt.savefig("SavedWeights/Weights.tiff")
+    plt.savefig("SavedWeights/2Weights.tiff")
     #plt.show()
 
 def loadMnist():
