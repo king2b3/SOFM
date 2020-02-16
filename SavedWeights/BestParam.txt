@@ -1,6 +1,6 @@
-Max epochs: 100
-Learning Rate: 4
-Tau: 100
-TauN: 10.0
-SigmaP: 10
-Final layers 784,400
+Max epochs: 15
+Learning Rate: 2
+Tau: 7.5
+TauN: 3.0
+SigmaP: 100
+Final layers 784,100
