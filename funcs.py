@@ -14,23 +14,25 @@ def graphHeatmap(Input,Output):
     plt.savefig(path2)
 
 
-def loadWeights(File):
+def loadWeights(File,layers):
     import numpy as np
     import csv
-    layers = [784,100]
     weights = np.random.randn(layers[1],layers[0])
     path = 'SavedWeights/'+File
-    with open(path, 'w') as csv_file:
-        csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
-        for neuron in range(len(weights)):
-            for w in range(len(weights[0])):
-                csv_writer.writerow([weights[neuron][w]])
-        csv_file.close()
+    dataFile = open(path)
+    lines = dataFile.readlines()
+    dataFile.close()
+    counter = 0
+    for neuron in range(layers[1]):
+        for w in range(layers[0]):
+            weights[neuron][w] = lines[counter]
+            counter += 1
     return weights
 
 
-def lookAtTheseBoys(num,weights):
-    return (weights[num].reshape(28,28))
+def lookAtTheseBoys(num,weights,size):
+    import numpy as np
+    return (np.transpose(weights[num].reshape(size,size)))
 
 def weightPlot(weights,Output):
     import matplotlib.pyplot as plt
@@ -39,7 +41,7 @@ def weightPlot(weights,Output):
     f, axarr = plt.subplots(10,10) #,constrained_layout=True)#,gridspec_kw = {'wspace':0, 'hspace':0})
     for row in range(10):
         for col in range(10):
-            axarr[row,col].imshow(lookAtTheseBoys(numfella,weights),cmap=plt.get_cmap('gray_r'))
+            axarr[row,col].imshow(lookAtTheseBoys(numfella,weights,28),cmap=plt.get_cmap('gray_r'))
             #axarr[row,col].grid('on', linestyle='--')
             axarr[row,col].set_xticklabels([])
             axarr[row,col].set_yticklabels([])
@@ -92,3 +94,22 @@ def plotMetrics(max_epochs,Metrics,Output):
     plt.ylim([0,4])
     #plt.show()
     plt.savefig(path2)
+
+def plotNeuronMap(weights,Output):
+    import matplotlib.pyplot as plt
+    plt.figure()
+    numfella = 0
+    f, axarr = plt.subplots(5,2) #,constrained_layout=True)#,gridspec_kw = {'wspace':0, 'hspace':0})
+    for row in range(5):
+        for col in range(2):
+            axarr[row,col].imshow(lookAtTheseBoys(numfella,weights,28),cmap=plt.get_cmap('gray_r'))
+            #axarr[row,col].grid('on', linestyle='--')
+            axarr[row,col].set_xticklabels([])
+            axarr[row,col].set_yticklabels([])
+            axarr[row,col].set_aspect('equal')
+            axarr[row,col].axis('off')
+            numfella += 1
+    plt.subplots_adjust(wspace=0, hspace=0)
+    path = 'SavedWeights/'+Output
+    plt.savefig(path)
+    #plt.show()

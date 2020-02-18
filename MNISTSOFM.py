@@ -10,7 +10,7 @@ import funcs
 ###########################
 
 training, test = funcs.loadMnist()
-max_epochs = 15
+max_epochs = 100
 no = 2
 tau = max_epochs/2
 tauN = max_epochs/5
@@ -25,6 +25,9 @@ Weights = "Weights.txt"
 OutputMap = "Map.tiff"
 OutputW =  "Weights.tiff"
 OutputMet = "Metrics.tiff"
+#OutputN1 = "Neruon 83.tiff"
+#OutputN2 = "Neruon 2.tiff"
+
 
 NN = Network(layers)
 
@@ -35,7 +38,13 @@ NN.saveWeights(Weights)
 
 # Testing, kinda
 
-weight = funcs.loadWeights(Weights)
+weight = funcs.loadWeights(Weights,layers)
 funcs.plotMetrics(max_epochs,Metrics,OutputMet)
 funcs.graphHeatmap(MapPickle,OutputMap)
 funcs.weightPlot(weight,OutputW)
+#funcs.plotNeuronMap(NN.neuronTest1,OutputN1)
+#funcs.plotNeuronMap(NN.neuronTest2,OutputN2)
+
+
+#print(NN.neuronTest)
+#print(NN.weights[81])
