@@ -79,21 +79,39 @@ def loadMnist():
 def sortSecond(val): 
     return val[1] 
 
-def plotMetrics(max_epochs,Metrics,Output):
+def plotMetrics(max_epochs,Metrics,Output,tau,tauN,no,sigmaP):
+    S = []
+    L = []
+
+    for epochs in range(max_epochs):
+        S.append(sigma(epochs,tauN,sigmaP)/sigmaP)
+        L.append(decay_LR(epochs,tau,no)/no)
+
+
     import matplotlib.pyplot as plt
     import pickle as pkl
-    plt.figure()
+
+    #plt.figure()
+    fig, ax1 = plt.subplots()
     epochs = range(max_epochs)
     path1 = 'SavedWeights/'+Metrics
     path2 = 'SavedWeights/'+Output
-    metrics = pkl.load( open(path1, "rb" ) )
-    plt.plot(epochs, metrics, 'ro')
-    plt.xlabel('Epohcs')
-    plt.ylabel('Average distance')
-    plt.title('Average distance between 1st and 2nd winning neuron over each epoch')
-    plt.ylim([0,4])
+    metrics = pkl.load(open(path1, "rb" ))
+
+    ax1.plot(epochs, metrics, 'ro')
+    ax1.set_xlabel('Epohcs')
+    ax1.set_ylabel('Average distance')
+
+    ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+    ax2.set_ylabel('"%" compared to initial value')
+    ax2.plot(epochs, S, 'bx')
+    ax2.plot(epochs, L, 'gx')
+    ax2.tick_params(axis='y')
+    fig.tight_layout()  # otherwise the right y-label is slightly clipped
     #plt.show()
+    plt.title('Average distance between 1st and 2nd winning neuron over each epoch')
     plt.savefig(path2)
+
 
 def plotNeuronMap(weights,Output):
     import matplotlib.pyplot as plt
@@ -113,3 +131,18 @@ def plotNeuronMap(weights,Output):
     path = 'SavedWeights/'+Output
     plt.savefig(path)
     #plt.show()
+
+
+def decay_LR(t,tau,no):
+    import numpy as np
+    a = no*np.exp(-t/tau)
+    if a < .001:
+        a = .001
+    return a
+
+def sigma(e,tauN,sigmaP):
+    import numpy as np
+    s = sigmaP*np.exp(0-(e/tauN))
+    if s < 2:
+        s = 2
+    return s

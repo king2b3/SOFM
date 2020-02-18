@@ -112,8 +112,8 @@ class Network(object):
             self.neuronTest2.append(self.weights[2])
             # epoch complete
             self.metricsDistance.append(np.average(distance))
-            if e % 5 == 0:
-                print('epoch',e,'complete')
+            #if e % 5 == 0:
+            #    print('epoch',e,'complete')
         return trainBool
 
     def saveWeights(self,filename):
@@ -165,8 +165,8 @@ class Network(object):
             Win.append(self.winning_neuron(t[0])[0])
             self.test_winning_neuron(t)
         # Prints the best neuron for each input
-        #for k in range(len(Win)):
-        #    print(Win[k],testing[k][1][0])
+        for k in range(len(Win)):
+            print(Win[k],testing[k][1][0])
         # Prints the best input for each neuron on map
         output = []
         for i in self.fullMap:

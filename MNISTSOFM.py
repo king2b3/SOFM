@@ -10,7 +10,7 @@ import funcs
 ###########################
 
 training, test = funcs.loadMnist()
-max_epochs = 100
+max_epochs = 15
 no = 2
 tau = max_epochs/2
 tauN = max_epochs/5
@@ -39,7 +39,7 @@ NN.saveWeights(Weights)
 # Testing, kinda
 
 weight = funcs.loadWeights(Weights,layers)
-funcs.plotMetrics(max_epochs,Metrics,OutputMet)
+funcs.plotMetrics(max_epochs,Metrics,OutputMet,tau,tauN,no,sigmaP)
 funcs.graphHeatmap(MapPickle,OutputMap)
 funcs.weightPlot(weight,OutputW)
 #funcs.plotNeuronMap(NN.neuronTest1,OutputN1)
