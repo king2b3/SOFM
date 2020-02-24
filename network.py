@@ -17,7 +17,7 @@ class Network(object):
         '''
         self.num_Layers = len(layers)
         self.layers = layers
-        self.weights = np.random.randn(self.layers[1],self.layers[0])
+        self.weights = np.random.rand(self.layers[1],self.layers[0])
         self.fullMap = []  
         [self.fullMap.append(['r',9999999]) for i in range(layers[1])]
         self.sq = int(np.sqrt(layers[1]))
@@ -165,8 +165,8 @@ class Network(object):
             Win.append(self.winning_neuron(t[0])[0])
             self.test_winning_neuron(t)
         # Prints the best neuron for each input
-        for k in range(len(Win)):
-            print(Win[k],testing[k][1][0])
+        #for k in range(len(Win)):
+        #    print(Win[k],testing[k][1][0])
         # Prints the best input for each neuron on map
         output = []
         for i in self.fullMap:

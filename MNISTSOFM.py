@@ -10,8 +10,8 @@ import funcs
 ###########################
 
 training, test = funcs.loadMnist()
-max_epochs = 1000
-no = 2
+max_epochs = 15
+no = 1
 tau = max_epochs/2
 tauN = max_epochs/5
 sigmaP = 100

@@ -98,18 +98,25 @@ def plotMetrics(max_epochs,Metrics,Output,tau,tauN,no,sigmaP):
     path2 = 'SavedWeights/'+Output
     metrics = pkl.load(open(path1, "rb" ))
 
-    ax1.plot(epochs, metrics, 'ro')
+    a = ax1.plot(epochs, metrics, 'ro',label='Average Distance')
     ax1.set_xlabel('Epohcs')
     ax1.set_ylabel('Average distance')
+    ax1.set_ylim([0,4])
 
     ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
     ax2.set_ylabel('"%" compared to initial value')
-    ax2.plot(epochs, S, 'bx')
-    ax2.plot(epochs, L, 'gx')
+    b = ax2.plot(epochs, S, 'bx',label="Sigma Decay")
+    c = ax2.plot(epochs, L, 'gx',label="LR decay")
     ax2.tick_params(axis='y')
     fig.tight_layout()  # otherwise the right y-label is slightly clipped
     #plt.show()
     plt.title('Average distance between 1st and 2nd winning neuron over each epoch')
+    ax1.legend()
+
+    # added these three lines
+    lns = a+b+c
+    labs = [l.get_label() for l in lns]
+    ax1.legend(lns, labs, loc=0)
     plt.savefig(path2)
 
 
