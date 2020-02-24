@@ -14,6 +14,31 @@ def graphHeatmap(Input,Output):
     plt.savefig(path2)
 
 
+def threshWeights(File,layers):
+    import numpy as np
+    import csv
+    weights = np.random.randn(layers[1],layers[0])
+    path = 'SavedWeights/'+File
+    dataFile = open(path)
+    lines = dataFile.readlines()
+    dataFile.close()
+    counter = 0
+    for neuron in range(layers[1]):
+        for w in range(layers[0]):
+            weights[neuron][w] = lines[counter]
+            counter += 1
+    
+    for neuron in range(layers[1]):
+        for w in range(layers[0]):
+            if weights[neuron][w] < 0.4:
+                weights[neuron][w] = 0
+            else:
+                weights[neuron][w] = 1
+            counter += 1
+
+    return weights    
+
+
 def loadWeights(File,layers):
     import numpy as np
     import csv
