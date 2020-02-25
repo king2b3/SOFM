@@ -1,4 +1,13 @@
+# Bayley King
+# Python 3.7.3
+# Function library to be used with SOFM network
+# I'll comment through the rest of the code a little more later
+# For now this is just a working func library 
+
 def graphHeatmap(Input,Output):
+    '''
+    Function to graph the final heatmap for the best input for each output neuron
+    '''
     import matplotlib.pyplot as plt
     import pickle as pkl
     plt.figure()
@@ -14,7 +23,10 @@ def graphHeatmap(Input,Output):
     plt.savefig(path2)
 
 
-def threshWeights(File,layers):
+def threshWeights(File,layers,thresh):
+    '''
+    Returns the saved weights with a threshold value set to create a clearer map
+    '''
     import numpy as np
     import csv
     weights = np.random.randn(layers[1],layers[0])
@@ -30,7 +42,7 @@ def threshWeights(File,layers):
     
     for neuron in range(layers[1]):
         for w in range(layers[0]):
-            if weights[neuron][w] < 0.4:
+            if weights[neuron][w] < thresh:
                 weights[neuron][w] = 0
             else:
                 weights[neuron][w] = 1
@@ -40,6 +52,9 @@ def threshWeights(File,layers):
 
 
 def loadWeights(File,layers):
+    '''
+    Returns the saved weights
+    '''
     import numpy as np
     import csv
     weights = np.random.randn(layers[1],layers[0])
@@ -56,10 +71,18 @@ def loadWeights(File,layers):
 
 
 def lookAtTheseBoys(num,weights,size):
+    '''
+    Recursive function call to help with plotting for weight map
+    '''
     import numpy as np
     return (np.transpose(weights[num].reshape(size,size)))
 
 def weightPlot(weights,Output):
+    '''
+    Plots the weight map of all the output neurons
+    Its slightly hardcoded to work for a 10x10 output map, but will be changing this later
+    Just need to change the inntances of the int 10 below to the appropiate sizes
+    '''
     import matplotlib.pyplot as plt
     plt.figure()
     numfella = 0
@@ -79,6 +102,13 @@ def weightPlot(weights,Output):
     #plt.show()
 
 def loadMnist():
+    '''
+    function to load MNIST from their respective text files
+    Will return a training and a testing set as a list.
+    Each input in every list is a list in itself with the first list value being the 
+    784 input pixel image of the digit, and the second value of the list being the numeric label.
+    ie. [[0,0,0,0,.4,.34,.23, .... ,0,0],[1]] 
+    '''
     import csv
     import random
     images = []
@@ -102,9 +132,14 @@ def loadMnist():
     return train,test
 
 def sortSecond(val): 
+    # Simple recurvsive function
     return val[1] 
 
 def plotMetrics(max_epochs,Metrics,Output,tau,tauN,no,sigmaP):
+    '''
+    plots the %decrease in the neighborhood rate and the learning rate with the 
+    average distance between the 1st and 2nd BMU against epochs
+    '''
     S = []
     L = []
 
@@ -146,6 +181,9 @@ def plotMetrics(max_epochs,Metrics,Output,tau,tauN,no,sigmaP):
 
 
 def plotNeuronMap(weights,Output):
+    '''
+    Unsued function, see graphHeatmap() for new version
+    '''
     import matplotlib.pyplot as plt
     plt.figure()
     numfella = 0
@@ -166,6 +204,7 @@ def plotNeuronMap(weights,Output):
 
 
 def decay_LR(t,tau,no):
+    # copy of function from networks.py for testing
     import numpy as np
     a = no*np.exp(-t/tau)
     if a < .001:
@@ -173,6 +212,7 @@ def decay_LR(t,tau,no):
     return a
 
 def sigma(e,tauN,sigmaP):
+    # copy of function from networks.py for testing
     import numpy as np
     s = sigmaP*np.exp(0-(e/tauN))
     if s < 2:
