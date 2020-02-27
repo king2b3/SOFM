@@ -6,7 +6,6 @@
 import csv
 import random
 import numpy as np
-#from tabulate import tabulate
 import pickle as pkl
 #########################
 
@@ -18,13 +17,15 @@ class Network(object):
         '''
         self.num_Layers = len(layers)
         self.layers = layers
-        self.weights = np.random.randn(self.layers[1],self.layers[0])
+        self.weights = np.random.rand(self.layers[1],self.layers[0])
         self.fullMap = []  
         [self.fullMap.append(['r',9999999]) for i in range(layers[1])]
         self.sq = int(np.sqrt(layers[1]))
         self.SOM_Shape = np.array([self.sq, self.sq])
         self.Index = np.mgrid[0:self.SOM_Shape[0],0:self.SOM_Shape[1]].reshape(2, self.SOM_Shape[0]*self.SOM_Shape[1]).T
         self.metricsDistance = []
+        self.neuronTest1 = []
+        self.neuronTest2 = []
 
 
     def winning_neuron(self,x):
@@ -71,7 +72,10 @@ class Network(object):
         This function will decay the sigma rate of the 
         neighboorhood function across each epoch
         '''
-        return (sigmaP*np.exp(0-(e/tauN)))
+        s = sigmaP*np.exp(0-(e/tauN))
+        if s < 2:
+            s = 2
+        return s
     
 
     def decay_LR(self,t,tau,no):
@@ -80,8 +84,8 @@ class Network(object):
         t is the current epoch of the system.
         '''
         a = no*np.exp(-t/tau)
-        if a < .1:
-            a = .1
+        if a < .001:
+            a = .001
         return a
 
     def train(self,training,max_epochs,no,tau,tauN,sigmaP,trainBool,batch_size = None):
@@ -104,10 +108,12 @@ class Network(object):
                 N,N2 = self.winning_neuron(i)
                 self.update_weights(eta,sigma,N,i)
                 distance.append(self.metrics(N,N2))
+            self.neuronTest1.append(self.weights[81])
+            self.neuronTest2.append(self.weights[2])
             # epoch complete
             self.metricsDistance.append(np.average(distance))
-            #if e % 10 == 0:
-            print('epoch',e,'complete')
+            #if e % 5 == 0:
+            #    print('epoch',e,'complete')
         return trainBool
 
     def saveWeights(self,filename):

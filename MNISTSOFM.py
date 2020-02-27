@@ -5,26 +5,11 @@
 
 ####### Decerations #######
 from network import Network 
-#import matplotlib.pyplot as plt
 import funcs
+from params import *
 ###########################
 
 training, test = funcs.loadMnist()
-max_epochs = 15
-no = 2
-tau = max_epochs/2
-tauN = max_epochs/5
-sigmaP = 100
-#batch_size = 50
-trainBool = True
-layers = [784,100]
-SimParm = "BestParam.txt"
-Metrics = "metrics.p"
-MapPickle = "map.p"
-Weights = "Weights.txt"
-OutputMap = "Map.tiff"
-OutputW =  "Weights.tiff"
-OutputMet = "Metrics.tiff"
 
 NN = Network(layers)
 
@@ -35,7 +20,8 @@ NN.saveWeights(Weights)
 
 # Testing, kinda
 
-weight = funcs.loadWeights(Weights)
-funcs.plotMetrics(max_epochs,Metrics,OutputMet)
+weight = funcs.threshWeights(OutputW,layers,0.4)
+#weight = funcs.loadWeights(OutputW,layers) # uncomment to plot true weight map
+funcs.plotMetrics(max_epochs,Metrics,OutputMet,tau,tauN,no,sigmaP)
 funcs.graphHeatmap(MapPickle,OutputMap)
 funcs.weightPlot(weight,OutputW)
