@@ -2,6 +2,8 @@ test.py
 Archive/
 SavedWeights/
 .funcs.py.swp
+DataSets/Arrhythmia_Train.txt
+DataSets/Arrhythmia_Test.txt
 
 # Stuff I "stole"
 
