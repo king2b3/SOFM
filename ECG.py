@@ -15,7 +15,9 @@ NN = Network(layers)
 
 #trainBool = NN.train(data,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
 NN.test(data,MapPickle,trainBool)
+print('saving metrics')
 NN.saveMetrics(max_epochs,no,tau,tauN,sigmaP,layers[-1],Metrics,SimParm)
+print('saving weights')
 NN.saveWeights(Weights)
 
 # Testing, kinda
