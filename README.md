@@ -1,6 +1,8 @@
-# MNIST in SOFM
+# General SOFM Network
 
 ---
+
+Welcome! This is my overall architecture of a Self Organizing Feature Map.
 
 The code is for the most part pretty modularized. 
 
