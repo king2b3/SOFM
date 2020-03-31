@@ -93,6 +93,9 @@ def loadMnist():
     import csv
     import random
     images = []
+    print('##############')
+    print('Loading Dataset')
+    print('##############')
     with open('DataSets/MNISTnumImages5000.txt') as csv_file:
         lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter='\t')
         for row in lines:

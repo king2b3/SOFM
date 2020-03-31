@@ -8,7 +8,7 @@ def neighborhoodPreservation(Input,test):
     '''
     this function will output the neighborhood preservation factor of the trained map
     ie. the number of labels in the output map will be compared to the number of labels
-        in the testing space. if trained properly the two should have similar distrobutions
+        in the testing space. if trained properly the two should have similar distributions
     '''
     import pickle as pkl
     import numpy as np
@@ -61,7 +61,7 @@ def neighborhoodPreservation(Input,test):
 def genTestTrustworthiness(test,outFilename,k=4):
     '''
     This function will generate a text file that contains the k nearnest neighbors for each input in the
-        testing set. The saved values are the indicies for the neighbors for the respective testing point 
+        testing set. The saved values are the indices for the neighbors for the respective testing point 
     '''
     import numpy as np
     import csv
@@ -71,7 +71,9 @@ def genTestTrustworthiness(test,outFilename,k=4):
         csv_writer = writer(write_obj)
         print('\nFinding Neighbors...\n')
         for a in test:
-            c = abs(a[0]-test)
+#            print(len(a))
+#            print(len(test))
+            c = abs(a-test)
             d = sum(np.transpose(c))
             neighbors = []
             for i in range(k):
@@ -83,7 +85,7 @@ def genTestTrustworthiness(test,outFilename,k=4):
 
 def outputBMU(BMUFilename,TestFilename):
     '''
-    outputBMU will print the total accuaracy of the trustworthiness of the network
+    outputBMU will print the total accuracy of the trustworthiness of the network
     Everytime a the current neighbor of an input is also a neighbor of the same index
         in the output set, a hit is recorded, else a miss is recorded.
     The accuracy is simply the hits/total points.
@@ -122,5 +124,5 @@ def main():
     genTestTrustworthiness(test,TestNN)
     outputBMU(OutNN,TestNN)
 
-if if __name__ == "__main__":
+if __name__ == "__main__":
     main()

@@ -74,8 +74,6 @@ def plotMetrics(max_epochs,Metrics,Output,tau,tauN,no,sigmaP):
     epochs = range(max_epochs)
     metrics = pkl.load(open(Metrics, "rb" ))
 
-    print(len(epochs))
-    print(len(metrics))
     a = ax1.plot(epochs, metrics, 'ro',label='Average Distance')
     ax1.set_xlabel('Epohcs')
     ax1.set_ylabel('Average distance')
