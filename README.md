@@ -2,6 +2,12 @@
 
 ---
 
+The code is for the most part pretty modularized. 
+
+1. network.py contains the structure of the SOFM network. You can consturct the network object in a seperate controller file, like [MNIST.py]
+    2. MNIST.py is 
+
+
 
 If you are reading this Sid or Andy, the network.py file contains all of the code related to the SOFM, and should be generic to any data set.
 
