@@ -4,7 +4,7 @@
 
 The code is for the most part pretty modularized. 
 
-1. network.py contains the structure of the SOFM network. You can consturct the network object in a seperate controller file, like [MNIST.py]
+1. network.py contains the structure of the SOFM network. You can consturct the network object in a seperate controller file, like [MNISTSOFM.py]
     2. MNIST.py is 
 
 
