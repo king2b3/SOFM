@@ -42,3 +42,4 @@ with open('DataSets/MNISTnumImages5000.txt') as csv_file:
     csv_file.close()
 metrics.genTestTrustworthiness(images,TestNN)
 metrics.outputBMU(OutNN,TestNN)
+
