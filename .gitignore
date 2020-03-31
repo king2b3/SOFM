@@ -5,7 +5,9 @@ SavedWeights/
 DataSets/Arrhythmia_Train.txt
 DataSets/Arrhythmia_Test.txt
 Colors/
-
+examples.py
+kNearest.py
+testNN.txt
 # Stuff I "stole"
 
 # Byte-compiled / optimized / DLL files

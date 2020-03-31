@@ -14,7 +14,8 @@ train,test = funcs.loadECG()
 NN = Network(layers)
 
 trainBool = NN.train(train,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
-NN.test(test,MapPickle,trainBool)
+NN.test(test,MapPickle,trainBool,BMUPickle,Weights)
+'''
 print('saving metrics')
 NN.saveMetrics(max_epochs,no,tau,tauN,sigmaP,layers[-1],Metrics,SimParm)
 print('saving weights')
@@ -27,3 +28,4 @@ weight = funcs.threshWeights(Weights,layers,0.4)
 funcs.plotMetrics(max_epochs,Metrics,OutputMet,tau,tauN,no,sigmaP)
 funcs.graphHeatmap(MapPickle,OutputMap)
 #funcs.weightPlot(weight,OutputW)
+'''

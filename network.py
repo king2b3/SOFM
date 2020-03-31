@@ -117,8 +117,7 @@ class Network(object):
         return trainBool
 
     def saveWeights(self,filename):
-        path = 'SavedWeights/'+filename
-        with open(path, 'w') as csv_file:
+        with open(filename, 'w') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             for neuron in range(len(self.weights)):
                 for w in range(len(self.weights[0])):
@@ -126,10 +125,8 @@ class Network(object):
 
 
     def saveMetrics(self,max_epochs,no,tau,tauN,sigmaP,layer,Metrics,Parm):
-        Mpath = 'SavedWeights/'+Metrics
-        Ppath = 'SavedWeights/'+Parm
-        pkl.dump(self.metricsDistance, open(Mpath, "wb" ) )
-        with open(Ppath, 'w') as csv_file:
+        pkl.dump(self.metricsDistance, open(Metrics, "wb" ) )
+        with open(Parm, 'w') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             csv_writer.writerow(['Max epochs: '+str(max_epochs)])
             csv_writer.writerow(['Learning Rate: '+str(no)])
@@ -139,15 +136,14 @@ class Network(object):
             csv_writer.writerow(['Final layers 784',layer])
 
 
-    def test(self,testing,Output,trainBool,Weights='Weights.txt'):
+    def test(self,testing,Output,trainBool,BMUSavePath,Weights='Weights.txt'):
         '''
         This function will test the trained network with the new
         data points
         '''
         if trainBool:
             print('Loading Weights......')
-            path1 = 'SavedWeights/'+Weights
-            dataFile = open(path1)
+            dataFile = open(Weights)
             lines = dataFile.readlines()
             dataFile.close()
             counter = 0
@@ -164,10 +160,12 @@ class Network(object):
         for t in testing:
             Win.append(self.winning_neuron(t[0])[0])
             self.test_winning_neuron(t)
-        # Prints the best neuron for each input
-        #for k in range(len(Win)):
-        #    print(Win[k],testing[k][1][0])
-        # Prints the best input for each neuron on map
+        # Saves the BMU Weight map for each test
+        BMUs = []
+        for k in Win:
+            BMUs.append(self.weights[k])
+        pkl.dump(BMUs, open(BMUSavePath, "wb" ) )
+        # Saves the best input for each neuron on map
         output = []
         for i in self.fullMap:
             output.append(i[0][0])
@@ -175,5 +173,5 @@ class Network(object):
         for x in range(0, len(output), self.sq):  
             h.append(output[x:x + self.sq])
         #print(tabulate(h))
-        path2 = 'SavedWeights/'+Output
-        pkl.dump(output, open(path2, "wb" ) )
+        pkl.dump(output, open(Output, "wb" ) )
+
