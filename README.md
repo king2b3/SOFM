@@ -1,16 +1,30 @@
-# MNIST in SOFM
+# General SOFM Network
 
 ---
 
+Welcome! This is my overall architecture of a Self Organizing Feature Map.
 
-If you are reading this Sid or Andy, the network.py file contains all of the code related to the SOFM, and should be generic to any data set.
+The code is for the most part pretty modularized. 
 
-I should have the comments in each function explaining their necessary inputs and what they do.
+* [network.py](https://github.com/king2b3/SOFM/blob/MNIST/network.py) contains the structure of the SOFM network. You can construct the network object in a separate controller file, like [MNISTSOFM.py](https://github.com/king2b3/SOFM/blob/MNIST/MNISTSOFM.py).
+* [MNISTSOFM.py](https://github.com/king2b3/SOFM/blob/MNIST/MNISTSOFM.py) or [ECG.py](https://github.com/king2b3/SOFM/blob/MNIST/ECG.py) acts as a controller, and contains the constructor for the network. It also controls the testing of the trained network, plotting figures, calculating metrics, and saving the trained network. 
+* [funcs.py](https://github.com/king2b3/SOFM/blob/MNIST/funcs.py) acts as the general function library the this project uses. It contains functions to load in the data sets, thresholding weights, etc.
+* [plotting.py](https://github.com/king2b3/SOFM/blob/MNIST/plotting.py) serves as the function library for plotting various features of the network.
+* [metrics.py](https://github.com/king2b3/SOFM/blob/MNIST/metrics.py) serves as the function library for generating metrics of the trained network.
+* [DataSets](https://github.com/king2b3/SOFM/tree/MNIST/DataSets) contains the data sets that we have used with the network. Some of them are in their basic form, others are zipped due to their size.
+* [params.py](https://github.com/king2b3/SOFM/tree/MNIST/params.py) contains the variable initialization of the trained network. each input / output file is defined here along with the parameters of the network. 
 
-MNISTSOFM.py acts as the controller code, and reads in the MNIST data and calls the necessary functions from network.py. The network is also initialized in this code, so any changes you want in the network parameters should be found here. If you wanted to run a set of simulations, you could set a few for loops that iteratre through a list of parameters outside of the network decleration comments to have some auto testing.
+### The general flow of your controller could be as follows
+1. construct [network.py](https://github.com/king2b3/SOFM/blob/MNIST/network.py) and load data set of your choice. a few sample data sets are located in [funcs.py](https://github.com/king2b3/SOFM/blob/MNIST/funcs.py)
+2. train the network using the network class. you can define your own parameters or just use the [params.py](https://github.com/king2b3/SOFM/tree/MNIST/params.py) structure. the train function will return a bool of False, which is used in the testing of the network.
+3. save the weights, then test the network. this will generate and save the output map of the trained network according to the testing set. 
+4. calculate and plot / output the metrics of the network. 
+
+### Other usage
+You don't need to use a controller for all use cases of the network. If you properly saved the last working version of the network, you can just set up your controller to output the metrics and look at the output plots. You don't need to train for every case. You should at the minimum test the network everytime you want to see any sort of output, just to make sure that the output map is properly stored. Since the training is the overhead, this shouldn't be much of an issue. 
 
 ### Branches
 
-The master branch contains my original SOFM made for homework 5 in intillgent systems, and is set to work on the animal datasets that we used. 
+The master branch contains the current working version of the network. It might not be the most up to date version, but it should be a stable version.
 
-The MNIST branch is my current working framework for the MNIST data set. The code is stable and will run but is serving as a backup currently. I'll merge the MNIST branch upon completion of the final network. 
+The dev branch is my current working framework for the network. If you want to see what I am currently struggling with at the given time, look here. If you want a stable version of the network, I would look at the master branch
