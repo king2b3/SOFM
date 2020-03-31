@@ -9,12 +9,12 @@ import funcs
 from paramsE import *
 ###########################
 
-data = funcs.loadECG()
+train,test = funcs.loadECG()
 
 NN = Network(layers)
 
-#trainBool = NN.train(data,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
-NN.test(data,MapPickle,trainBool)
+trainBool = NN.train(train,max_epochs,no,tau,tauN,sigmaP,trainBool) #Comment out line to run on saved weights
+NN.test(test,MapPickle,trainBool)
 print('saving metrics')
 NN.saveMetrics(max_epochs,no,tau,tauN,sigmaP,layers[-1],Metrics,SimParm)
 print('saving weights')
@@ -22,8 +22,8 @@ NN.saveWeights(Weights)
 
 # Testing, kinda
 
-#weight = funcs.threshWeights(OutputW,layers,0.4)
+weight = funcs.threshWeights(Weights,layers,0.4)
 #weight = funcs.loadWeights(OutputW,layers) # uncomment to plot true weight map
-#funcs.plotMetrics(max_epochs,Metrics,OutputMet,tau,tauN,no,sigmaP)
-#funcs.graphHeatmap(MapPickle,OutputMap)
+funcs.plotMetrics(max_epochs,Metrics,OutputMet,tau,tauN,no,sigmaP)
+funcs.graphHeatmap(MapPickle,OutputMap)
 #funcs.weightPlot(weight,OutputW)

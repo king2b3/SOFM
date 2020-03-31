@@ -112,8 +112,8 @@ class Network(object):
             self.neuronTest2.append(self.weights[2])
             # epoch complete
             self.metricsDistance.append(np.average(distance))
-            #if e % 5 == 0:
-            #    print('epoch',e,'complete')
+            if e % 5 == 0:
+                print('epoch',e,'complete')
         return trainBool
 
     def saveWeights(self,filename):

@@ -1,6 +1,6 @@
 # Paramater Definitions
 
-max_epochs = 50
+max_epochs = 15
 no = 1
 tau = max_epochs/2
 tauN = max_epochs/5

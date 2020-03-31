@@ -4,6 +4,7 @@ SavedWeights/
 .funcs.py.swp
 DataSets/Arrhythmia_Train.txt
 DataSets/Arrhythmia_Test.txt
+Colors/
 
 # Stuff I "stole"
 

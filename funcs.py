@@ -101,6 +101,40 @@ def weightPlot(weights,Output):
     plt.savefig(path)
     #plt.show()
 
+def loadECG():
+    '''
+    function to load EEG data from their respective text files
+    Each input in every list is a list in itself with the first list value being the 
+    eeg signal in discrete time, and the second value of the list being the numeric label.
+    ie. [[0,0,0,0,.4,.34,.23, .... ,0,0],[1]] 
+    '''
+    import csv
+    import random
+    test_data = []
+    test_labels = []
+    train_data = []
+    train_labels = []
+    print('##############')
+    print('Loading Dataset')
+    print('##############')
+    with open('DataSets/Arrhythmia_Train.txt') as csv_file:
+        lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter=',')
+        for row in lines:
+            train_data.append(list(row[0:-2]))
+            train_labels.append(list(row[-2:-1]))
+        csv_file.close()
+    with open('DataSets/Arrhythmia_Test.txt') as csv_file:
+        lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter=',')
+        for row in lines:
+            test_data.append(list(row[0:-2]))
+            test_labels.append(list(row[-2:-1]))
+        csv_file.close()
+
+    test_data = list(zip(test_data,test_labels))
+    train_data = list(zip(train_data,train_labels))
+    return train_data,test_data
+
+
 def loadMnist():
     '''
     function to load MNIST from their respective text files
@@ -158,6 +192,8 @@ def plotMetrics(max_epochs,Metrics,Output,tau,tauN,no,sigmaP):
     path2 = 'SavedWeights/'+Output
     metrics = pkl.load(open(path1, "rb" ))
 
+    print(len(epochs))
+    print(len(metrics))
     a = ax1.plot(epochs, metrics, 'ro',label='Average Distance')
     ax1.set_xlabel('Epohcs')
     ax1.set_ylabel('Average distance')
