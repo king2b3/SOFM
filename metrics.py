@@ -3,8 +3,9 @@
 # Metric function library for SOFM network 
 
 import funcs
+import pickle as pkl
 
-def neighborhoodPreservation(Input,test):
+def neighborhoodPreservation(path1,test):
     '''
     this function will output the neighborhood preservation factor of the trained map
     ie. the number of labels in the output map will be compared to the number of labels
@@ -13,7 +14,6 @@ def neighborhoodPreservation(Input,test):
     import pickle as pkl
     import numpy as np
     outMap = []
-    path1 = 'SavedWeights/'+Input
     outMap = pkl.load( open(path1, "rb" ) )
     testlabels = []
     testlabels_counter = []
@@ -76,7 +76,7 @@ def genTestTrustworthiness(test,outFilename,k=4):
             c = abs(a-test)
             d = sum(np.transpose(c))
             neighbors = []
-            for i in range(k):
+            for _ in range(k):
                 e = np.argmin(d)
                 neighbors.append(e)
                 d[e] = 9999999999999

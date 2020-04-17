@@ -1,13 +1,13 @@
 # Paramater Definitions
 
-max_epochs = 1
-no = 1
+max_epochs = 1000
+no = .01
 tau = max_epochs/2
 tauN = max_epochs/5
 sigmaP = 100
 #batch_size = 50                # uncomment for batch training
 trainBool = True
-layers = [784,100]
+layers = [10000,100]
 pathExt = "SavedWeights/"
 SimParm = pathExt+"BestParam.txt"
 Metrics = pathExt+"metrics.p"

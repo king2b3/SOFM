@@ -108,11 +108,11 @@ class Network(object):
                 N,N2 = self.winning_neuron(i)
                 self.update_weights(eta,sigma,N,i)
                 distance.append(self.metrics(N,N2))
-            self.neuronTest1.append(self.weights[81])
-            self.neuronTest2.append(self.weights[2])
+            #self.neuronTest1.append(self.weights[81])
+            #self.neuronTest2.append(self.weights[2])
             # epoch complete
             self.metricsDistance.append(np.average(distance))
-            if e % 5 == 0:
+            if e % 100 == 0:
                 print('epoch',e,'complete')
         return trainBool
 
@@ -133,7 +133,7 @@ class Network(object):
             csv_writer.writerow(['Tau: '+str(tau)])
             csv_writer.writerow(['TauN: '+str(tauN)])
             csv_writer.writerow(['SigmaP: '+str(sigmaP)])
-            csv_writer.writerow(['Final layers 784',layer])
+            csv_writer.writerow(['Final layers: ',layer])
 
 
     def test(self,testing,Output,trainBool,BMUSavePath,Weights='Weights.txt'):
@@ -167,8 +167,10 @@ class Network(object):
         pkl.dump(BMUs, open(BMUSavePath, "wb" ) )
         # Saves the best input for each neuron on map
         output = []
+        #print(self.fullMap)
         for i in self.fullMap:
-            output.append(i[0][0])
+            output.append(i[0])
+            #output.append(i[0][0])
         h = []
         for x in range(0, len(output), self.sq):  
             h.append(output[x:x + self.sq])

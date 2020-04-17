@@ -82,6 +82,37 @@ def loadECG():
     return train_data,test_data
 
 
+def loadCovid():
+    '''
+    function to load EEG data from their respective text files
+    Each input in every list is a list in itself with the first list value being the 
+    eeg signal in discrete time, and the second value of the list being the numeric label.
+    ie. [[0,0,0,0,.4,.34,.23, .... ,0,0],[1]] 
+    '''
+    import csv
+    import random
+    test_data = []
+    test_labels = []
+    train_data = []
+    train_labels = []
+    print('##############')
+    print('Loading Dataset')
+    print('##############')
+    with open('DataSets/covid/train.csv') as csv_file:
+        lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter=',')
+        for row in lines:
+            train_data.append(row[:-1])
+            train_labels.append(row[-1])
+    with open('DataSets/covid/test.csv') as csv_file:
+        lines = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC, delimiter=',')
+        for row in lines:
+            test_data.append(row[:-1])
+            test_labels.append(row[-1])
+
+    test_data = list(zip(test_data,test_labels))
+    train_data = list(zip(train_data,train_labels))
+    return train_data,test_data
+
 def loadMnist():
     '''
     function to load MNIST from their respective text files

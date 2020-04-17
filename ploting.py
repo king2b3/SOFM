@@ -41,7 +41,7 @@ def weightPlot(weights,Output):
     f, axarr = plt.subplots(10,10) #,constrained_layout=True)#,gridspec_kw = {'wspace':0, 'hspace':0})
     for row in range(10):
         for col in range(10):
-            axarr[row,col].imshow(lookAtTheseBoys(numfella,weights,28),cmap=plt.get_cmap('gray_r'))
+            axarr[row,col].imshow(lookAtTheseBoys(numfella,weights,100),cmap=plt.get_cmap('gray_r'))
             #axarr[row,col].grid('on', linestyle='--')
             axarr[row,col].set_xticklabels([])
             axarr[row,col].set_yticklabels([])
@@ -73,6 +73,8 @@ def plotMetrics(max_epochs,Metrics,Output,tau,tauN,no,sigmaP):
     fig, ax1 = plt.subplots()
     epochs = range(max_epochs)
     metrics = pkl.load(open(Metrics, "rb" ))
+    print(len(epochs))
+    print(len(metrics))
 
     a = ax1.plot(epochs, metrics, 'ro',label='Average Distance')
     ax1.set_xlabel('Epohcs')
