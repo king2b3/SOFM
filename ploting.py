@@ -41,7 +41,7 @@ def weightPlot(weights,Output):
     f, axarr = plt.subplots(10,10) #,constrained_layout=True)#,gridspec_kw = {'wspace':0, 'hspace':0})
     for row in range(10):
         for col in range(10):
-            axarr[row,col].imshow(lookAtTheseBoys(numfella,weights,28),cmap=plt.get_cmap('gray_r'))
+            axarr[row,col].imshow(lookAtTheseBoys(numfella,weights,1000),cmap=plt.get_cmap('gray_r'))
             #axarr[row,col].grid('on', linestyle='--')
             axarr[row,col].set_xticklabels([])
             axarr[row,col].set_yticklabels([])
@@ -73,6 +73,8 @@ def plotMetrics(max_epochs,Metrics,Output,tau,tauN,no,sigmaP):
     fig, ax1 = plt.subplots()
     epochs = range(max_epochs)
     metrics = pkl.load(open(Metrics, "rb" ))
+    #print(len(epochs))
+    #print(len(metrics))
 
     a = ax1.plot(epochs, metrics, 'ro',label='Average Distance')
     ax1.set_xlabel('Epohcs')
@@ -103,10 +105,10 @@ def plotNeuronMap(weights,Output):
     import matplotlib.pyplot as plt
     plt.figure()
     numfella = 0
-    f, axarr = plt.subplots(5,2) #,constrained_layout=True)#,gridspec_kw = {'wspace':0, 'hspace':0})
-    for row in range(5):
-        for col in range(2):
-            axarr[row,col].imshow(lookAtTheseBoys(numfella,weights,28),cmap=plt.get_cmap('gray_r'))
+    f, axarr = plt.subplots(10,10) #,constrained_layout=True)#,gridspec_kw = {'wspace':0, 'hspace':0})
+    for row in range(10):
+        for col in range(10):
+            axarr[row,col].imshow(lookAtTheseBoys(numfella,weights,1000),cmap=plt.get_cmap('gray_r'))
             #axarr[row,col].grid('on', linestyle='--')
             axarr[row,col].set_xticklabels([])
             axarr[row,col].set_yticklabels([])
@@ -116,3 +118,15 @@ def plotNeuronMap(weights,Output):
     plt.subplots_adjust(wspace=0, hspace=0)
     plt.savefig(Output)
     #plt.show()
+
+def main():
+    print('Ploting Images')
+    weight = funcs.loadWeights(Weights,layers) # uncomment to plot true weight map
+    weightPlot(weight,OutputW)
+    plotMetrics(max_epochs,Metrics,OutputMet,tau,tauN,no,sigmaP)
+    graphHeatmap(MapPickle,OutputMap)
+
+
+if __name__ == "__main__":
+    from params import *
+    main()
