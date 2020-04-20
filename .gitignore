@@ -4,7 +4,6 @@ SavedWeights/
 .funcs.py.swp
 DataSets/Arrhythmia_Train.txt
 DataSets/Arrhythmia_Test.txt
-DataSets/covid
 Colors/
 examples.py
 kNearest.py
@@ -16,6 +15,7 @@ Graphics (1).jpg
 Graphics.jpg
 sidFuncs.py
 sidFuncs.txt
+DataSets/covid/
 
 # Stuff I "stole"
 
