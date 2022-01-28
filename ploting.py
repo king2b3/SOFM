@@ -44,6 +44,7 @@ def weightPlot(weights,Output):
     for row in range(10):
         for col in range(10):
             axarr[row,col].imshow(lookAtTheseBoys(numfella,weights,1000),cmap=plt.get_cmap('gray_r'))
+            #1000 is hardcoded as sqrt(1000000) - change it to sqrt(layers[0])
             #axarr[row,col].grid('on', linestyle='--')
             axarr[row,col].set_xticklabels([])
             axarr[row,col].set_yticklabels([])
