@@ -16,6 +16,8 @@ def graphHeatmap(Input,Output):
     for x in range(0, len(output), 10):  
         h.append(output[x:x + 10])
     import seaborn as sns; sns.set()
+    import numpy as np
+    h = np.squeeze(h)
     ax = sns.heatmap(h, annot=True,xticklabels=False,yticklabels=False,cbar=False)
     #plt.show()
     plt.savefig(Output)
