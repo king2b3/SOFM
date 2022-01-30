@@ -28,3 +28,6 @@ You don't need to use a controller for all use cases of the network. If you prop
 The master branch contains the current working version of the network. It might not be the most up to date version, but it should be a stable version.
 
 The dev branch is my current working framework for the network. If you want to see what I am currently struggling with at the given time, look here. If you want a stable version of the network, I would look at the master branch
+
+### Articles using the network
+1. [Tutorial: SOFM for the MNIST Dataset](https://medium.com/@bfouda/sofm-for-the-mnist-dataset-b2b896e5bcef) - Basem Fouda
