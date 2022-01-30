@@ -117,7 +117,7 @@ class Network(object):
         return trainBool
 
     def saveWeights(self,filename):
-        with open(filename, 'w') as csv_file:
+        with open(filename, 'w', newline = '') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             for neuron in range(len(self.weights)):
                 for w in range(len(self.weights[0])):
